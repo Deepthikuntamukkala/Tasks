@@ -1,0 +1,27 @@
+package synchronization;
+
+class BankAccount {
+   private int balance = 1000;
+   synchronized void withdraw(int amount, String user) {
+       if (balance >= amount) {
+           System.out.println(user + " is withdrawing $" + amount);
+           balance -= amount;
+           System.out.println("Remaining Balance: $" + balance);
+        } else {
+             System.out.println(user + " tried to withdraw but insufficient funds.");
+        }
+    }
+}
+public class BankAccountThread {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		BankAccount account = new BankAccount();
+		Runnable user1 = () -> account.withdraw(400, "User1");
+		Runnable user2 = () -> account.withdraw(700, "User2");
+		new Thread(user1).start();
+		new Thread(user2).start();
+
+	}
+
+}
